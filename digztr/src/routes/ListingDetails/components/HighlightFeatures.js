@@ -10,11 +10,11 @@ class Feature extends Component {
   render(){
     return (
       <div className="col-sm-6 col-md-3 text-center house-feature">
-        <a
+        {this.props.editFeatureState?<a
           onClick={() => this.props.deleteFeature(this.props.feature)}
           >
           <img className="pull-right" src={require('../../../assets/svg/x-button.svg')} width="20" height="20" />
-        </a>
+        </a>:''}
         <img className="row " src={this.props.feature.icon.url} alt="" height="90" />
         <span className="row">{this.props.feature.name}: {this.props.feature.value}</span>
         <img src={require("../../../assets/svg/fire.svg")} alt="" width="30px" />
@@ -33,7 +33,8 @@ class HighlightFeatures extends Component {
       url:""
     },
     submitState: "Add New Feature",
-    disabledSubmitState: true
+    disabledSubmitState: true,
+    editFeatureState: false,
   }
   resetStates(){
     this.setState({
@@ -42,7 +43,8 @@ class HighlightFeatures extends Component {
       selectedIcon: {
         icon:"",
         url:""
-      }
+      },
+      editFeatureState: false,
     })
   }
   handleChangeName(e){
@@ -142,6 +144,7 @@ class HighlightFeatures extends Component {
             key={index}
             feature={item}
             deleteFeature={(feature) => this.handleDelete(feature)}
+            editFeatureState={this.state.editFeatureState}
             />
         )
       })
@@ -192,7 +195,7 @@ class HighlightFeatures extends Component {
         <h5 className="sec-title violet-text">High Light Features</h5>
         <div className="row">
           {this.renderList()}
-          <a
+          {this.state.editFeatureState?<a
             data-toggle="modal"
             data-target="#iconModal"
             >
@@ -202,18 +205,17 @@ class HighlightFeatures extends Component {
                   <h4>{this.state.submitState}</h4>
                 </div>
             </div>
-          </a>
+          </a>:''}
         </div>
         <br />
         <div className="row text-center" style={{margin: "0 20px"}}>
-          {/**<button
+          <button
             type="button"
             class="btn btn-overwrite btn-block"
-            data-toggle="modal"
-            data-target="#iconModal"
+            onClick={() => this.setState({editFeatureState:!this.state.editFeatureState})}
             >
-            {this.state.submitState}
-          </button>**/}
+            Edit Features
+          </button>
         </div>
         <div className="row text-center feature-text">
           <p>This home has {this.props.features.length}/5 hottest features!  It will be sold fast</p>
