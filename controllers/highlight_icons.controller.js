@@ -1,4 +1,4 @@
-const HighlightIcon = require('../models/highlight_icons.model');
+const HighlightIcon = require('../models/icons.model');
 
 /**
  * Get Listing list
