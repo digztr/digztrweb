@@ -2,6 +2,8 @@ const User = require('../models/user.model');
 const axios = require('axios');
 const async = require('async');
 const FB = require('fb');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
 
 /**
  * Get Listing list
@@ -12,7 +14,7 @@ function post(req, res, next){
 	let fbUserId = data.fb_user_id;
 	let accessToken = data.token;
 	let options = {
-		appId: '2040928639462492',
+		appId: config.facebookAuth.clientID,
 		xfbml: true,
 		version: 'v2.6',
 		status: true,
@@ -35,7 +37,6 @@ function post(req, res, next){
 			);
     },
     (facebookUserData,cb) => {
-      console.log(facebookUserData);
       // build the data we're going to insert
 			let data = {};
 			data.email = facebookUserData.email;
@@ -45,13 +46,32 @@ function post(req, res, next){
 
       User.show(data.email)
         .then(response => {
-          console.log(response);
           if (response) {
-            res.json(response);
+            // generate jwt
+						let jwtToken = jwt.sign(
+							{
+								response
+							},
+							config.jwt.secret,
+						);
+						let result = Object.assign(
+							{},
+							data,
+							{ jwt: jwtToken },
+						)
+						console.log(result);
+            res.json(result);
           }else{
             User.create(data)
               .then(user => {
-                console.log(data)
+								// generate jwt
+								let jwtToken = jwt.sign(
+									{
+										user
+									},
+									config.jwt.secret,
+								);
+								user.jwt = jwtToken;
                 res.json(user);
               })
               .catch(e => {
@@ -66,4 +86,28 @@ function post(req, res, next){
   ]);
 }
 
-module.exports = {post};
+/**
+ * Get User From JWT Token
+ */
+function getFromToken(req, res, next) {
+	let token = req.body.token || req.query.token;
+	if (!token) {
+		res.status(401).json({message: `No token found`});
+	}
+
+  // Check token by decoding using secret
+	jwt.verify(token, config.jwt.secret, (err, user) => {
+		if (err) next(err);
+
+    // Get User from db
+		let result = Object.assign(
+			{},
+			user.response,
+			{jwt:token}
+		);
+
+		res.json(result);
+	})
+}
+
+module.exports = {post,getFromToken};

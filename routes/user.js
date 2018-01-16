@@ -6,4 +6,7 @@ var router = Router();
 router.route('/')
   .post(userCtrl.post);
 
+router.route('/token')
+  .post(userCtrl.getFromToken);
+
 module.exports = router
