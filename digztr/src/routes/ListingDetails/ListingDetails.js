@@ -114,6 +114,7 @@ class FloatRight extends Component {
         <div id="sidenav" style={{zIndex: 1041}}>
           <RequestForm
             agents={this.props.agents}
+            user={this.props.user}
             />
           <ScheduleForm />
         </div>
@@ -276,6 +277,7 @@ class ListingDetails extends Component {
           </div>
           <FloatRight
             agents={this.props.listing.agents}
+            user={this.props.user}
             />
         </div>
         <NearbyHomes
@@ -289,5 +291,6 @@ class ListingDetails extends Component {
 }
 
 export default connect(state => ({
-  listing: state.Listing
+  listing: state.Listing,
+  user: state.User
 }))(ListingDetails);

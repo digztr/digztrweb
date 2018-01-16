@@ -7,6 +7,10 @@ a {
   padding-left: 10px !important;
 }
 
+.modal {
+  padding: none !important;
+}
+
 #loginModal .modal-body {
   padding: 0 15px;
 }
