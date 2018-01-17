@@ -14,6 +14,7 @@ export default class NeighborhoodFacilities extends Component {
 
   }
   componentDidUpdate(prevProps, prevState) {
+    const { active } = this.state;
     if (this.props.geo.lat && this.props.geo.lng) {
       let geo = this.props.geo;
 
@@ -31,7 +32,7 @@ export default class NeighborhoodFacilities extends Component {
         let request = {
           location: center,
           radius: 5000,
-          type: 'school'
+          type: active
         };
 
         let service = new google.maps.places.PlacesService(map);
@@ -50,213 +51,32 @@ export default class NeighborhoodFacilities extends Component {
   }
   renderSchoolMarkers() {
     this.deleteMarkers();
-    let geo = this.props.geo;
 
-    GoogleMapsLoader.load(function(google) {
-
-      let map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: geo.lat, lng: geo.lng},
-        zoom: 15,
-        fullscreenControl: false,
-        zoomControl: false,streetViewControl: false,
-      });
-
-      let center = new google.maps.LatLng(geo.lat,geo.lng);
-
-      let request = {
-        location: center,
-        radius: 5000,
-        type: 'school'
-      };
-
-      let service = new google.maps.places.PlacesService(map);
-      service.textSearch(request, (result, status) => {
-        result.forEach(place => {
-          let marker = new google.maps.Marker({
-            position: place.geometry.location,
-            map: map,
-            title: place.name
-          });
-          markers.push(marker);
-        });
-      });
-    });
     this.setState({active:"school"});
   }
   renderRestaurantMarkers() {
     this.deleteMarkers();
-    let geo = this.props.geo;
 
-    GoogleMapsLoader.load(function(google) {
-
-      let map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: geo.lat, lng: geo.lng},
-        zoom: 15,
-        fullscreenControl: false,
-        zoomControl: false,streetViewControl: false,
-      });
-
-      let center = new google.maps.LatLng(geo.lat,geo.lng);
-
-      let request = {
-        location: center,
-        radius: 5000,
-        type: 'restaurant'
-      };
-
-      let service = new google.maps.places.PlacesService(map);
-      service.textSearch(request, (result, status) => {
-        result.forEach(place => {
-          let marker = new google.maps.Marker({
-            position: place.geometry.location,
-            map: map,
-            title: place.name
-          });
-          markers.push(marker);
-        });
-      });
-    });
     this.setState({active:"restaurant"});
   }
   renderMarketMarkers(){
     this.deleteMarkers();
 
-    let geo = this.props.geo;
-
-    GoogleMapsLoader.load(function(google) {
-
-      let map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: geo.lat, lng: geo.lng},
-        zoom: 15,
-        fullscreenControl: false,
-        zoomControl: false,streetViewControl: false,
-      });
-
-      let center = new google.maps.LatLng(geo.lat,geo.lng);
-
-      let request = {
-        location: center,
-        radius: 5000,
-        type: 'grocery_or_supermarket'
-      };
-
-      let service = new google.maps.places.PlacesService(map);
-      service.textSearch(request, (result, status) => {
-        result.forEach(place => {
-          let marker = new google.maps.Marker({
-            position: place.geometry.location,
-            map: map,
-            title: place.name
-          });
-          markers.push(marker);
-        });
-      });
-    });
     this.setState({active:"market"});
   }
   renderHospitalMarkers() {
     this.deleteMarkers();
-    let geo = this.props.geo;
 
-    GoogleMapsLoader.load(function(google) {
-
-      let map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: geo.lat, lng: geo.lng},
-        zoom: 15,
-        fullscreenControl: false,
-        zoomControl: false,streetViewControl: false,
-      });
-
-      let center = new google.maps.LatLng(geo.lat,geo.lng);
-
-      let request = {
-        location: center,
-        radius: 5000,
-        type: 'hospital'
-      };
-
-      let service = new google.maps.places.PlacesService(map);
-      service.textSearch(request, (result, status) => {
-        result.forEach(place => {
-          let marker = new google.maps.Marker({
-            position: place.geometry.location,
-            map: map,
-            title: place.name
-          });
-          markers.push(marker);
-        });
-      });
-    });
     this.setState({active:"hospital"});
   }
   renderGasStationMarkers() {
     this.deleteMarkers();
-    let geo = this.props.geo;
 
-    GoogleMapsLoader.load(function(google) {
-
-      let map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: geo.lat, lng: geo.lng},
-        zoom: 15,
-        fullscreenControl: false,
-        zoomControl: false,streetViewControl: false,
-      });
-
-      let center = new google.maps.LatLng(geo.lat,geo.lng);
-
-      let request = {
-        location: center,
-        radius: 5000,
-        type: 'gas_station'
-      };
-
-      let service = new google.maps.places.PlacesService(map);
-      service.textSearch(request, (result, status) => {
-        result.forEach(place => {
-          let marker = new google.maps.Marker({
-            position: place.geometry.location,
-            map: map,
-            title: place.name
-          });
-          markers.push(marker);
-        });
-      });
-    });
     this.setState({active:"gas_station"});
   }
   renderBakeryMarkers() {
     this.deleteMarkers();
-    let geo = this.props.geo;
 
-    GoogleMapsLoader.load(function(google) {
-
-      let map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: geo.lat, lng: geo.lng},
-        zoom: 15,
-        fullscreenControl: false,
-        zoomControl: false,streetViewControl: false,
-      });
-
-      let center = new google.maps.LatLng(geo.lat,geo.lng);
-
-      let request = {
-        location: center,
-        radius: 5000,
-        type: 'bakery'
-      };
-
-      let service = new google.maps.places.PlacesService(map);
-      service.textSearch(request, (result, status) => {
-        result.forEach(place => {
-          let marker = new google.maps.Marker({
-            position: place.geometry.location,
-            map: map,
-            title: place.name
-          });
-          markers.push(marker);
-        });
-      });
-    });
     this.setState({active:"bakery"});
   }
   deleteMarkers(){
