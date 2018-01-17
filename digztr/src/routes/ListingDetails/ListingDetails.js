@@ -209,6 +209,7 @@ class ListingDetails extends Component {
     );
   }
   componentDidMount() {
+    debugger;
     this.props.dispatch(ListingActions.loadById(this.props.params.id));
     var caroTimer = setInterval(function(){caro(startIndex() + 1)}, 10000);
   $('#img-carousel .img-container .img-item').eq(0).addClass('c-img-active');

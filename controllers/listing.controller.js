@@ -105,6 +105,7 @@ function get_rets(req, res, next) {
  * Get RETS Mls by id
  */
  function show_rets(req, res, next) {
+
    Listing.show(req.params.id)
     .then(listing => {
         axios.get(`https://api.simplyrets.com/properties/${listing.mlsId}`, {
@@ -118,6 +119,7 @@ function get_rets(req, res, next) {
           res.json(response.data);
         })
         .catch(e => next(e));
+
     })
     .catch(e => next(e));
  }

@@ -30,6 +30,7 @@ export const _loadByIdResponse = (response) => ({
  * @returns {Function}
  */
 export function loadById(id) {
+    debugger;
  return (dispatch, getState) => {
    dispatch(_loadByIdRequest());
    axios.get(`${config.api.baseUrl}/api/listings/${id}`)
@@ -68,7 +69,8 @@ export function loadById(id) {
   * @returns {Function}
   */
   export function loadRETS(id) {
-    return (dispatch, getState) => {
+     debugger;
+     return (dispatch, getState) => {
       dispatch(_loadRETSRequest());
       axios.get(`${config.api.baseUrl}/api/listings/rets/${id}`)
        .then(res => dispatch(_loadRETSResponse(res.data)));
