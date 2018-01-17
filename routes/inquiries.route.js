@@ -5,7 +5,7 @@ const inquiryCtrl = require('../controllers/inquiries.controller');
 var router = Router()
 
 router.route('/')
-  .post(inquiryCtrl.create)
+  .post(inquiryCtrl.validate_create, inquiryCtrl.create)
   .get(inquiryCtrl.list);
 
 router.route('/:id')
