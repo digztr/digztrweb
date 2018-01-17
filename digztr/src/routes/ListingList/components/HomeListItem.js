@@ -54,7 +54,7 @@ class HomeItem extends Component{
 						  		<h6>(222) - 123 - 456</h6>
 						  	</div>
 						  	<div className="col-md-4">
-						  		 <a href={`/listings/${this.props.home._id}`} className="btn btn-block btn-overwrite aa">READ MORE</a>
+						  		 <a href={this.props.home.url} className="btn btn-block btn-overwrite aa">READ MORE</a>
 						  	</div>
 					  	</div>
 					</div>

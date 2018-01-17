@@ -6,7 +6,56 @@ const async = require('async');
  */
 function list(req, res, next) {
   Listing.list()
-    .then(listings => res.json(listings))
+    .then(listings => {
+      let result = [];
+      async.each(listings, (listing, callback) => {
+        if (listing.mlsId && listing.mlsId!=='') {
+          console.log(listing);
+          axios.get(`https://api.simplyrets.com/properties/${listing.mlsId}`, {
+            headers: {
+              Authorization: `Basic ${Buffer.from('nav_4t3434y2:5644q3561335n05t').toString('base64')}`
+            }
+          })
+          .then(response => {
+            response.data._id = listing._id;
+            response.name = "RETS Property";
+            let address = ""
+            Object.keys(response.data.address).reverse().forEach(item => {
+              if (response.data.address[item]) {
+                address+=`${response.data.address[item]} `;
+              }
+            });
+            result.push({
+              _id: listing._id,
+              name: "RETS Property",
+              address: address,
+              meta: [
+                {image:"house.svg",type:"Area",value:response.data.property.area},
+                {image:"bed.svg",type:"Bedrooms",value:response.data.property.bedrooms},
+                {image:"bathtub.svg",type:"Bathrooms",value:response.data.property.bathrooms}
+              ],
+              price: response.data.listPrice,
+              url: `/listings/rets/${listing._id}`
+            })
+            callback();
+          })
+          .catch( e => callback())
+        }else{
+          result.push({
+            _id: listing._id,
+            name: listing.name,
+            address: listing.address,
+            meta: listing.meta,
+            price: listing.price,
+            url: `/listings/${listing._id}`
+          });
+          callback();
+        }
+      }, err => {
+        if (err) next(e);
+        else res.json(result);
+      });
+    })
     .catch(e => next(e));
 }
 

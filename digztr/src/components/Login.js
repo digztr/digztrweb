@@ -10,10 +10,6 @@ class Login extends Component {
     if (window.hasOwnProperty('FB')) {
       window.FB.login(
         res => {
-          // if (res.status === 'connected') {
-          //   window.location.reload();
-          //   return;
-          // }
           if (res.status === 'connected') {
             dispatch(UserActions.fbLogin(res));
           }
