@@ -10,15 +10,15 @@ class Feature extends Component {
   render(){
     return (
       <div className="col-sm-6 col-md-3 text-center house-feature">
-        <a
+        {this.props.editFeatureState?<a
           onClick={() => this.props.deleteFeature(this.props.feature)}
           >
           <img className="pull-right" src={require('../../../assets/svg/x-button.svg')} width="20" height="20" />
-        </a>
+        </a>:''}
         <img className="row " src={this.props.feature.icon.url} alt="" height="90" />
         <span className="row">{this.props.feature.name}: {this.props.feature.value}</span>
-        <img src={require("../../../assets/svg/fire.svg")} alt="" width="30px" />
-        <b className="orange-text">Hottest Size</b>
+        {/*<img src={require("../../../assets/svg/fire.svg")} alt="" width="30px" />*/}
+        {/*<b className="orange-text">Hottest Size</b>*/}
       </div>
     )
   }
@@ -32,8 +32,9 @@ class HighlightFeatures extends Component {
       icon:"",
       url:""
     },
-    submitState: "Add New Feature",
-    disabledSubmitState: true
+    submitState: "Edit Features",
+    disabledSubmitState: true,
+    editFeatureState: false,
   }
   resetStates(){
     this.setState({
@@ -42,7 +43,8 @@ class HighlightFeatures extends Component {
       selectedIcon: {
         icon:"",
         url:""
-      }
+      },
+      editFeatureState: false,
     })
   }
   handleChangeName(e){
@@ -56,8 +58,8 @@ class HighlightFeatures extends Component {
       .then(res => {
         console.log(res);
         this.setState({disabledSubmitState:true});
-        this.setState({submitState:"Add New Feature"});
-        this.props.dispatch(ListingActions.loadRETS());
+        this.setState({submitState:"Edit Features"});
+        this.props.dispatch(ListingActions.loadRETS(this.props._id));
         this.resetStates();
       })
       .catch(res => {
@@ -65,58 +67,6 @@ class HighlightFeatures extends Component {
         this.setState({disabledSubmitState:false});
         this.setState({submitState:"Error! Please click to try again"});
       })
-  }
-  handleSubmit(item) {
-    this.setState({selectedIcon: item});
-    let data = [];
-    this.setState({disabledSubmitState:true});
-    this.setState({submitState:"Updating Features..."});
-    this.props.features.map(item => {
-      data.push({
-        name: item.name,
-        value: item.value,
-        icon: item.icon._id
-      });
-    });
-
-    data.push({
-      name: item.name,
-      value: item.value,
-      icon: item._id
-    });
-
-    this.handleApiRequest(data);
-    // e.preventDefault();
-    // if (this.state.disabledSubmitState) {
-    //   this.setState({disabledSubmitState:false});
-    //   this.setState({submitState:"Save New Feature"});
-    // }else{
-    //   let data = [];
-    //
-    //   this.props.features.map(item => {
-    //     data.push({
-    //       name: item.name,
-    //       value: item.value,
-    //       icon: item.icon._id
-    //     });
-    //   });
-    //
-    //   data.push({
-    //     name: this.state.name,
-    //     value: this.state.value,
-    //     icon: this.state.selectedIcon._id
-    //   });
-    //
-    //   // data = JSON.stringify(data);
-    //
-    //   this.handleApiRequest(data);
-    //
-    //   this.setState({disabledSubmitState:true});
-    //   this.setState({submitState:"Saving!!"});
-    //
-    //
-    //
-    // }
   }
   handleDelete(feature){
     let data = [];
@@ -134,6 +84,31 @@ class HighlightFeatures extends Component {
   handleIconChange(item){
     this.setState({selectedIcon: item});
   }
+  handleSubmit(item){
+    if (this.state.editFeatureState) {
+      let data = [];
+      this.setState({disabledSubmitState:true});
+      this.setState({submitState:"Updating Features..."});
+      this.props.features.map(item => {
+        data.push({
+          name: item.name,
+          value: item.value,
+          icon: item.icon._id
+        });
+      });
+
+      data.push({
+        name: this.state.selectedIcon.name,
+        value: this.state.value,
+        icon: this.state.selectedIcon._id
+      });
+
+      this.handleApiRequest(data);
+    }else{
+      this.setState({editFeatureState:!this.state.editFeatureState});
+      this.setState({submitState:"Save Changes"});
+    }
+  }
   renderList() {
     return (
       this.props.features.map((item,index) => {
@@ -142,6 +117,7 @@ class HighlightFeatures extends Component {
             key={index}
             feature={item}
             deleteFeature={(feature) => this.handleDelete(feature)}
+            editFeatureState={this.state.editFeatureState}
             />
         )
       })
@@ -150,15 +126,15 @@ class HighlightFeatures extends Component {
   renderModal(){
     return (
       <Icons
-        handleSelect={(icon) => this.handleSubmit(icon)}
+        handleSelect={(icon) => this.handleIconChange(icon)}
       />
     )
   }
   renderInputForms(){
-    if (!this.state.disabledSubmitState) {
+    if (this.state.editFeatureState) {
       return (
         <div>
-          <div className="form-group">
+          {/*<div className="form-group">
             <label for="name" className="control-label">Name: </label>
             <input
               type="text"
@@ -166,9 +142,9 @@ class HighlightFeatures extends Component {
               value={this.state.name}
               onChange={e => this.handleChangeName(e)}
               />
-          </div>
+          </div>*/}
           <div className="form-group">
-            <label for="value" className="control-label">Value: </label>
+            <label for="value" className="control-label">Description: </label>
             <input
               type="text"
               className="form-control"
@@ -192,28 +168,28 @@ class HighlightFeatures extends Component {
         <h5 className="sec-title violet-text">High Light Features</h5>
         <div className="row">
           {this.renderList()}
-          <a
+          {this.state.editFeatureState?<a
             data-toggle="modal"
             data-target="#iconModal"
             >
             <div className="col-sm-6 col-md-3 text-center add-feature-cont">
                 <div className="add-feature-button">
                   <span><img src={require('../../../assets/svg/plus-button.svg')} height="30" width="30" /></span>
-                  <h4>{this.state.submitState}</h4>
+                  <h4>Select Features</h4>
                 </div>
             </div>
-          </a>
+          </a>:''}
         </div>
         <br />
         <div className="row text-center" style={{margin: "0 20px"}}>
-          {/**<button
+          {this.renderInputForms()}
+          <button
             type="button"
             class="btn btn-overwrite btn-block"
-            data-toggle="modal"
-            data-target="#iconModal"
+            onClick={() => this.handleSubmit()}
             >
             {this.state.submitState}
-          </button>**/}
+          </button>
         </div>
         <div className="row text-center feature-text">
           <p>This home has {this.props.features.length}/5 hottest features!  It will be sold fast</p>
