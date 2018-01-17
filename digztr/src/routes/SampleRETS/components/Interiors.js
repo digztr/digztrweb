@@ -18,25 +18,31 @@ class Interiors extends Component {
     );
   }
   render(){
-    return (
-      <div id="section-05" className="section">
-        <h5 className="sec-title violet-text">Interior Features</h5>
-        <div className="row interior-features-content">
-          {this.renderInterior()}
-        </div>
+    const { interiors } = this.props;
+    if (interiors.length) {
+      return (
+        <div id="section-05" className="section">
+          <h5 className="sec-title violet-text">Interior Features</h5>
+          <div className="row interior-features-content">
+            {this.renderInterior()}
+          </div>
 
-        <h5 className="sec-sub-secondary-title violet-text">Construction</h5>
-        <div className="row interior-features-content">
-          <div className="col-xs-12 col-sm-6 col-md-4">
-            <p>
-              Type and Style <br />
-              Structure type: Tudor <br />
-              Single Family
-            </p>
+          <h5 className="sec-sub-secondary-title violet-text">Construction</h5>
+          <div className="row interior-features-content">
+            <div className="col-xs-12 col-sm-6 col-md-4">
+              <p>
+                Type and Style <br />
+                Structure type: Tudor <br />
+                Single Family
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }else{
+      return null;
+    }
+
   }
 }
 
