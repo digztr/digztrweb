@@ -94,30 +94,11 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.add-feature-cont {
-  height: 144px;
-  width: 197.44px;
-  position: relative;
-  border: 2px dotted lightgray;
-  margin: 0 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.add-feature-cont .add-feature-button h4{
-  font-size: 15px;
-  color: #ff7f25;
-}
 .house-feature{
-  height: 151px;
-  margin-bottom: 20px;
+
 }
 .house-feature span{
   font-size: 15px;
-}
-.house-feature a{
-  cursor: pointer;
 }
 .feature-text{
   margin: 0 20px;
@@ -336,41 +317,41 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   color: #6d6d6d;
 }
 
-#details #sidenav{
+#sidenav{
     z-index: 100;
 }
-#details #sidenav .card{
+#sidenav .card{
   width: 300px;
   box-shadow: 1px 1px 10px #4c4c4c;
 }
-#details #sidenav .card-title{
+#sidenav .card-title{
   padding: 8px;
 }
-#details #sidenav .card-title h5{
+#sidenav .card-title h5{
   font-size: 13px;
 }
-#details #sidenav .card-content{
+#sidenav .card-content{
   padding: 10px 10px 10px 10px;
   background-color: white;
 }
-#details #sidenav .card-content .row{
+#sidenav .card-content .row{
   margin-bottom: 10px;
 }
-#details #sidenav .call span{
+#sidenav .call span{
   font-size: 11px;
 }
-#details #sidenav .call input{
+#sidenav .call input{
   border: 1px solid #273d86;
   color: #ff7f25;
 }
-#details #sidenav .forms input, #details #sidenav .forms textarea{
+#sidenav .forms input, #sidenav .forms textarea{
   margin-bottom: 8px;
   font-size: 12px;
 }
-#details #sidenav .calendar-box{
+#sidenav .calendar-box{
   margin: 0 30px;
 }
-#details #sidenav .calendar-box .item-calendar{
+#sidenav .calendar-box .item-calendar{
   width: 47px;
   height:47px;
   margin: 0 4px;
@@ -378,72 +359,69 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   background-color: #e2e2e2;
   border: 1px solid #273d86;
 }
-#details #sidenav .item-calendar .cal-week{
+#sidenav .item-calendar .cal-week{
   font-size: 10px;
   width: 45px;
   margin: 0 4px 0 0;
   border-radius: 3px 3px 0 0;
 }
-#details #sidenav .item-calendar .cal-day{
+#sidenav .item-calendar .cal-day{
   font-weight: bold;
   margin: 0px;
 }
-#details #sidenav .item-calendar .cal-month{
+#sidenav .item-calendar .cal-month{
   font-size: 10px;
   margin: 0px;
   margin-top: -3px;
 }
-#details #sidenav .item-calendar .cal-text{
+#sidenav .item-calendar .cal-text{
   margin: 12px 0;
 }
-#details #sidenav .item-calendar a:hover{
+#sidenav .item-calendar a:hover{
   text-decoration: none;
 }
 
-#details #sidenav .carousel {
+#sidenav .carousel {
   margin-bottom: 10px;
 }
 
-#details #sidenav .carousel .item {
+#sidenav .carousel .item {
   height: 30px;
 }
 
-#details #sidenav .carousel-buttons {
+#sidenav .carousel-buttons {
   width: 100%;
   color:#666;
   bottom:1px;
 }
-#details #sidenav .carousel-buttons > div {
+#sidenav .carousel-buttons > div {
   padding:10px;
   border:1px solid #666;
 }
-#details #sidenav .carousel-buttons a {
+#sidenav .carousel-buttons a {
   color:#666;
   display:block;
   line-height:30px;
 }
-#details #sidenav .progress{
+#sidenav .progress{
   margin: 0 30px;
   height: 5px;
 }
-#details #sidenav .progress-bar-success{
+#sidenav .progress-bar-success{
   background-color: #adadad;
 }
-#details #sidenav .carousel-control.right, .carousel-control.left{
+#sidenav .carousel-control.right, .carousel-control.left{
   background: none;
   width: 30px;
   height: 47px;
 }
-.img-container{
+#sidenav .profile-pic .img-container{
+  width: 40px;
   border-radius: 90px;
+  height: 40px;
   overflow: hidden;
 }
-
-#details #sidenav .profile-pic .img-container{
-  width: 40px;
-  height: 40px;
-}
-#details #sidenav .profile-pic .img-container img{
+#sidenav .profile-pic .img-container img{
   height: 50px;
 }
 /* slider */

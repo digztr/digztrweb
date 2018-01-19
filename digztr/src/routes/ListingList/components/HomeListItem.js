@@ -50,7 +50,7 @@ class HomeItem extends Component{
 					  			<img src="https://image.flaticon.com/icons/png/512/147/147140.png" className="icon" alt="" />
 						  	</div>
 						  	<div className="col-md-5">
-					  			<h6>List by : Jonhy Doe</h6>
+					  			<h6>List by : {this.props.home.owner?this.props.home.owner.first_name:'Unclaimed'}</h6>
 						  		<h6>(222) - 123 - 456</h6>
 						  	</div>
 						  	<div className="col-md-4">

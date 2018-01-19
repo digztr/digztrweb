@@ -19,7 +19,6 @@ class Interiors extends Component {
   }
   render(){
     const { interiors } = this.props;
-    // display only if listing have interiors
     if (interiors.length) {
       return (
         <div id="section-05" className="section">

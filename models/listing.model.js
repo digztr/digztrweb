@@ -2,6 +2,7 @@ const listing_header_images = require('./listing_header_images');
 const icons = require('./icons.model');
 const highlight_icons = require('./highlight_icons.model');
 const agents = require('./agent.model');
+const users = require('./user.model');
 const  mongoose = require('mongoose');
 const httpStatus = require('http-status');
 const APIError = require('../helpers/APIError');
@@ -71,6 +72,10 @@ const ListingSchema = new mongoose.Schema({
   mlsId: {
     type: Number,
     require: false
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'users'
   }
 });
 
@@ -94,6 +99,7 @@ ListingSchema.statics = {
     .populate('features.icon')
     .populate('facts.icon')
     .populate('agents')
+    .populate('users')
     .exec();
   },
   /**
@@ -106,6 +112,7 @@ ListingSchema.statics = {
     .populate('features.icon')
     .populate('facts.icon')
     .populate('agents')
+    .populate('users')
     .exec();
   },
   /**
@@ -114,6 +121,7 @@ ListingSchema.statics = {
   get_by_mls(id) {
     return this.findOne({"mlsId":id})
     .populate('features.icon')
+    .populate('users')
     .exec();
   }
 }
