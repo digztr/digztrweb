@@ -65,6 +65,7 @@ export default class NearbyHomes extends Component {
     }
     render() {
       const { homes } = this.props;
+      // display only if listing have nearby homes
       if (homes.length) {
         return (
           <div id="section-11" className="row">

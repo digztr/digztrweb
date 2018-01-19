@@ -34,6 +34,7 @@ class Facts extends Component {
   }
   render(){
     const { facts } = this.props;
+    // display only if listing have facts
     if (facts.length) {
       return (
         <div id="section-04" className="section">
