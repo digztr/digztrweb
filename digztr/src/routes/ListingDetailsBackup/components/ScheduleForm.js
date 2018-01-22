@@ -10,7 +10,8 @@ class ScheduleForm extends Component {
       phone: "",
       email: "",
       message: "",
-      selectedDate: ""
+      selectedDate: "",
+      errors: {}
     };
     componentWillMount() {
       const { cookies } = this.props;
@@ -47,11 +48,12 @@ class ScheduleForm extends Component {
     clearFields(){
       this.setState({
         message: "",
-        selectedDate: ""
+        selectedDate: "",
+        errors: {}
       });
     }
-    handleSubmit(e){
-      e.preventDefault();
+    handleSubmit(){
+      // e.preventDefault();
 
       let data = {
         name: this.state.name,
@@ -64,7 +66,15 @@ class ScheduleForm extends Component {
       axios.post(`${config.api.baseUrl}/api/schedules`, data)
         .then(res => {
           this.clearFields();
+        })
+        .catch(e => {
+          this.setState({errors:e.response.data.errors});
         });
+    }
+    handleErrors(e){
+      let errors = this.state.errors;
+      delete errors[e.target.name];
+      this.setState({errors:errors});
     }
     renderModal(){
       return (
@@ -92,22 +102,29 @@ class ScheduleForm extends Component {
                 <div className="modal-body">
                   <form
                     className="forms"
-                    onSubmit={e => this.handleSubmit(e)}
+                    onKeyDown={e => this.handleErrors(e)}
                     >
-                    <input
-                      type="text"
-                      value={this.state.name}
-                      className="form-control"
-                      placeholder="Fullname"
-                      onChange={e => this.handleNameChange(e)}
-                      />
-                    <input
-                      type="text"
-                      value={this.state.phone}
-                      className="form-control"
-                      placeholder="Phone"
-                      onChange={e => this.handlePhoneChange(e)}
-                      />
+                    <div class={`form-group ${this.state.errors.hasOwnProperty('name')?'has-error':''}`}>
+                      <input
+                        type="text"
+                        value={this.state.name}
+                        className="form-control"
+                        placeholder="Fullname"
+                        onChange={e => this.handleNameChange(e)}
+                        />
+                      {this.state.errors.hasOwnProperty('name')?<span class="error text-danger">{this.state.errors.name.msg}</span>:''}
+                    </div>
+                    <div class={`form-group ${this.state.errors.hasOwnProperty('phone')?'has-error':''}`}>
+                      <input
+                        type="text"
+                        value={this.state.phone}
+                        className="form-control"
+                        placeholder="Phone"
+                        onChange={e => this.handlePhoneChange(e)}
+                        />
+                      {this.state.errors.hasOwnProperty('phone')?<span class="error text-danger">{this.state.errors.phone.msg}</span>:''}
+                    </div>
+                    <div class={`form-group ${this.state.errors.hasOwnProperty('email')?'has-error':''}`}>
                       <input
                         type="text"
                         value={this.state.email}
@@ -115,23 +132,29 @@ class ScheduleForm extends Component {
                         placeholder="Email"
                         onChange={e => this.handleEmailChange(e)}
                         />
-                    <textarea
-                      className="form-control"
-                      rows="3"
-                      cols="80"
-                      placeholder="Your Message"
-                      onChange={e => this.handleMessageChange(e)}
-                      >
-                      {this.state.message}
-                    </textarea>
+                      {this.state.errors.hasOwnProperty('email')?<span class="error text-danger">{this.state.errors.email.msg}</span>:''}
+                    </div>
+                    <div class={`form-group ${this.state.errors.hasOwnProperty('email')?'has-error':''}`}>
+                      <textarea
+                        className="form-control"
+                        rows="3"
+                        cols="80"
+                        placeholder="Your Message"
+                        onChange={e => this.handleMessageChange(e)}
+                        >
+                        {this.state.message}
+                      </textarea>
+                      {this.state.errors.hasOwnProperty('email')?<span class="error text-danger">{this.state.errors.email.msg}</span>:''}
+                    </div>
                     <input
-                      type="submit"
-                      className="btn-overwrite"
-                      style={{position: "absolute", marginLeft:"80px",width:"120px",padding: "5px 20px"}}
-                      value="Submit"
                       data-dismiss="modal"
                       data-toggle="modal"
                       data-target="#thankyouModal"
+                      type="submit"
+                      onClick={() => this.handleSubmit()}
+                      className="btn-overwrite"
+                      style={{position: "absolute", marginLeft:"80px",width:"120px",padding: "5px 20px"}}
+                      value="Submit"
                       />
                   </form>
                 </div>

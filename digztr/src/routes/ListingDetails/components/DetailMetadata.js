@@ -8,7 +8,7 @@ class DetailMetadata extends Component {
           return (
             <div className="col-xs-6 col-sm-3 margin-bottom-20" key={index} >
               <p className="sec-title">{ item.type }</p>
-              <span className="sec-desc">{ item.value }</span>
+              {<span className="sec-desc">{ item.value }</span>}
               <br />
               <img src={dotOrange} alt="" width={"25px"} height={"3px"} />
             </div>
@@ -18,6 +18,7 @@ class DetailMetadata extends Component {
 
   }
   render() {
+    console.log(this.props);
     return(
       <div className="col-sm-12 col-md-8 col-lg-7">
         <h5 className="violet-text">{this.props.title}</h5>

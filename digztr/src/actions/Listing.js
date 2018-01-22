@@ -68,7 +68,7 @@ export function loadById(id) {
   * @returns {Function}
   */
   export function loadRETS(id) {
-    return (dispatch, getState) => {
+     return (dispatch, getState) => {
       dispatch(_loadRETSRequest());
       axios.get(`${config.api.baseUrl}/api/listings/rets/${id}`)
        .then(res => dispatch(_loadRETSResponse(res.data)));
