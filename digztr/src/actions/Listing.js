@@ -30,7 +30,6 @@ export const _loadByIdResponse = (response) => ({
  * @returns {Function}
  */
 export function loadById(id) {
-    debugger;
  return (dispatch, getState) => {
    dispatch(_loadByIdRequest());
    axios.get(`${config.api.baseUrl}/api/listings/${id}`)
