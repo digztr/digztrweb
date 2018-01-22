@@ -3,10 +3,6 @@ import dotOrange from '../../../assets/jpeg/dot-orange.jpg';
 
 class DetailMetadata extends Component {
   renderList() {
-    this.props.meta.map(item => {
-      console.log(item);
-      return item;
-    });
       return (
         this.props.meta.map((item,index) => {
           return (

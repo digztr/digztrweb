@@ -13,10 +13,6 @@ export IMGIX_BASE_URL=https://digztr-temp.imgix.net
 export FB_CLIENT_ID=305937243144090
 export FB_CLIENT_SECRET=f475592e8673761976d679b0ea8d8ccd
 export FB_PROFILE_URL=https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email
-'facebookAuth' : {
-        'clientID'      : 'your-secret-clientID-here', // your App ID
-        'clientSecret'  : 'your-client-secret-here', // your App Secret
-        'callbackURL'   : 'http://localhost:8080/auth/facebook/callback',
-        'profileURL'    : 'https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email',
-        'profileFields' : ['id', 'email', 'name'] // For requesting permissions from Facebook API
-    },
+export S3_KEY=AKIAIBXPSJVQNN46BXYQ
+export S3_SECRET=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
+export S3_BUCKET=digztr

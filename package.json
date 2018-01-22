@@ -29,6 +29,7 @@
     "express-validator": "^4.3.0",
     "express-winston": "^2.4.0",
     "fb": "^2.0.0",
+    "fs": "0.0.1-security",
     "helmet": "^3.9.0",
     "http-status": "^1.0.1",
     "jquery": "^3.2.1",
@@ -37,11 +38,14 @@
     "method-override": "^2.3.10",
     "mongoose": "^4.13.9",
     "morgan": "^1.9.0",
+    "node-uuid": "^1.4.8",
     "nodemailer": "^4.4.1",
     "nodemon": "^1.14.11",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "react-scripts": "^1.0.17",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
     "winston": "^2.4.0"
   }
 }

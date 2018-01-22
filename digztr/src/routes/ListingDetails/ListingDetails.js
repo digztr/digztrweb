@@ -46,9 +46,7 @@ class DetailHeader extends Component {
     return (
         <div className="row">
           <div className="col-sm-12 col-md-8">
-
               {this.renderAddress()}
-
           </div>
           <div className="col-sm-12 col-md-4">
             Comment Like Share
@@ -151,8 +149,6 @@ class DetailBody extends Component {
     return metas;
   }
   render() {
-    console.log(this.props.listing);
-    console.log(this.getMeta());
     if (!this.handleActive()) return (<div>loading...</div>);
     return (
       <div>
@@ -287,7 +283,7 @@ class ListingDetails extends Component {
   render() {
     console.log(this.props)
     return (
-      <div>
+      <div id="details">
         {this.renderCarousel()}
         <div className="row">
           <div className="col-sm-12 col-md-9">
