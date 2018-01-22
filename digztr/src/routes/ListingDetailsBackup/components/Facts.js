@@ -33,14 +33,20 @@ class Facts extends Component {
     )
   }
   render(){
-    return (
-      <div id="section-04" className="section">
-            <h5 className="sec-title violet-text">Facts and Features</h5>
-            <div className="row">
-              {this.renderList()}
+    const { facts } = this.props;
+    // display only if listing have facts
+    if (facts.length) {
+      return (
+        <div id="section-04" className="section">
+              <h5 className="sec-title violet-text">Facts and Features</h5>
+              <div className="row">
+                {this.renderList()}
+              </div>
             </div>
-          </div>
-    );
+      );
+    }else{
+      return null;
+    }
   }
 }
 

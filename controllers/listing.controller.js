@@ -9,7 +9,7 @@ function list(req, res, next) {
     .then(listings => {
       let result = [];
       async.each(listings, (listing, callback) => {
-        if (listing.mlsId && listing.mlsId!=='') {
+        // if (listing.mlsId && listing.mlsId!=='') {
           console.log(listing);
           axios.get(`https://api.simplyrets.com/properties/${listing.mlsId}`, {
             headers: {
@@ -35,22 +35,22 @@ function list(req, res, next) {
                 {image:"bathtub.svg",type:"Bathrooms",value:response.data.property.bathrooms}
               ],
               price: response.data.listPrice,
-              url: `/listings/rets/${listing._id}`
+              url: `/listings/${listing._id}`
             })
             callback();
           })
           .catch( e => callback())
-        }else{
-          result.push({
-            _id: listing._id,
-            name: listing.name,
-            address: listing.address,
-            meta: listing.meta,
-            price: listing.price,
-            url: `/listings/${listing._id}`
-          });
-          callback();
-        }
+        // }else{
+        //   result.push({
+        //     _id: listing._id,
+        //     name: listing.name,
+        //     address: listing.address,
+        //     meta: listing.meta,
+        //     price: listing.price,
+        //     url: `/listings/${listing._id}`
+        //   });
+        //   callback();
+        // }
       }, err => {
         if (err) next(e);
         else res.json(result);

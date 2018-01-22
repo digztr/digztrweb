@@ -1,8 +1,41 @@
 const Inquiry = require('../models/inquiries.model');
+const { check, validationResult } = require('express-validator/check');
+
+/**
+* Add New Inquiry Validator
+*/
+const validate_create = [
+  check('name')
+  .isLength({min:1})
+  .withMessage('Name is required')
+  .trim(),
+  check('phone')
+  .isLength({min:1})
+  .withMessage('Phone is required')
+  .trim(),
+  check('email')
+  .isLength({min:1})
+  .withMessage('Email is required')
+  .isEmail()
+  .withMessage('Must be a valid email')
+  .trim(),
+  check('message')
+  .isLength({min:1})
+  .withMessage('Message is required')
+  .trim()
+];
+
 /**
  * Add New Inquiry
  */
 function create(req, res, next) {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    res.status(500).json({ errors: errors.mapped() });
+  }
+
   let payload = req.body;
   Inquiry.create(payload)
     .then(inquiry => res.json(inquiry))
@@ -27,18 +60,4 @@ function show(req, res, next) {
     .catch(e => next(e));
 }
 
-/**
- * Update Inquiry by id
- */
-function update_features(req, res, next) {
-  Inquiry.show(req.params.id)
-    .then(Inquiry => {
-      Inquiry.set({features: req.body});
-      Inquiry.save()
-        .then(updatedInquiry => res.json(updatedInquiry))
-        .catch(e => next(e));
-    })
-    .catch(e => next(e));
-}
-
-module.exports = {create,list,show,update_features};
+module.exports = {create,validate_create,list,show};

@@ -73,11 +73,14 @@ class ScheduleForm extends Component {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-body">
-                  <div className="img-container">
+                  <div className="img-container text-center">
                     <img src="http://digztr-temp.imgix.net/uploads/01.jpg?h=200&w=200"/>
                   </div>
                   <h2><center>Thank You</center></h2>
                   <p>We'll call or text you very soon to confirm your request (typically within 15 minutes, but it might be a bit longer outside business hours or in rare cases). It's free, and there's no obligation! We look forward to helping you.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>

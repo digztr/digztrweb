@@ -5,7 +5,7 @@ const scheduleCtrl = require('../controllers/tour_schedule.controller');
 var router = Router()
 
 router.route('/')
-  .post(scheduleCtrl.create)
+  .post(scheduleCtrl.validate_create, scheduleCtrl.create)
   .get(scheduleCtrl.list);
 
 router.route('/:id')

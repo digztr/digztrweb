@@ -28,7 +28,7 @@ class DetailDescription extends Component {
           });
         });
       }
-  }
+    }
   render() {
     return (
       <div id="section-02" className="section">
