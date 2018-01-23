@@ -76,7 +76,17 @@ const ListingSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users'
-  }
+  },
+  interiors: [{
+    type: {
+      type: String,
+      require: true
+    },
+    values: [{
+      type: String,
+      require: true
+    }]
+  }]
 });
 
 /**

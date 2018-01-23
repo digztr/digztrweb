@@ -30,4 +30,7 @@ module.exports = {
 		secret: process.env.S3_SECRET,
 		bucket: process.env.S3_BUCKET,
 	},
+  imgix: {
+    url: process.env.IMGIX_BASE_URL
+  }
 }

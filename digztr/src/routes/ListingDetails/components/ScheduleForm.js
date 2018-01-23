@@ -51,7 +51,7 @@ class ScheduleForm extends Component {
       });
     }
     handleSubmit(e){
-      e.preventDefault();
+      // e.preventDefault();
 
       let data = {
         name: this.state.name,
@@ -95,7 +95,6 @@ class ScheduleForm extends Component {
                 <div className="modal-body">
                   <form
                     className="forms"
-                    onSubmit={e => this.handleSubmit(e)}
                     >
                     <input
                       type="text"
@@ -132,6 +131,7 @@ class ScheduleForm extends Component {
                       className="btn-overwrite"
                       style={{position: "absolute", marginLeft:"80px",width:"120px",padding: "5px 20px"}}
                       value="Submit"
+                      onClick={() => this.handleSubmit()}
                       data-dismiss="modal"
                       data-toggle="modal"
                       data-target="#thankyouModal"
