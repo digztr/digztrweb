@@ -7,6 +7,7 @@ const request = require('request');
 const uuid = require('node-uuid');
 const knox = require('knox');
 const config = require('../config/config');
+
 /**
  * Get Listing list
  */
@@ -16,7 +17,6 @@ function list(req, res, next) {
       Authorization: `Basic ${Buffer.from('nav_4t3434y2:5644q3561335n05t').toString('base64')}`
     }
   }).then(response => {
-    // console.log(response);
     let result = [];
     async.each(response.data, (listing, callback) => {
       Listing.get_by_mls(listing.mlsId).then(list => {
@@ -42,43 +42,81 @@ function list(req, res, next) {
           callback();
         }else{
           // migrating of photos to s3
-
           // async.each(listing.photos, (photo, cb) => {
-          //   let filename = uuid.v4();
+          //   let filename = `${uuid.v4()}.jpg`;
+          //
           //   request
           //     .get(photo)
-          //     .pipe(filename)
-          //     .on('response', r => {
-          //       // initialize knox client
-        	// 			var knoxClient = knox.createClient({
-        	// 				key: config.s3.key,
-        	// 				secret: config.s3.secret,
-        	// 				bucket: config.s3.bucket,
-        	// 			});
+          //     .pipe(fs.createWriteStream(`uploads/${filename}`))
+          //     .on('finish', () => {
+          //             // initialize knox client
+          //             var knoxClient = knox.createClient({
+          //               key: config.s3.key,
+          //               secret: config.s3.secret,
+          //               bucket: config.s3.bucket,
+          //             });
           //
-        	// 			// send put via knox
-        	// 			knoxClient.putFile(
-        	// 				filename,
-        	// 				'uploads/' + filename,
-        	// 				{
-        	// 					'Content-Type': 'image/jpg',
-        	// 					'x-amz-acl': 'public-read',
-        	// 				},
-        	// 				function(err, result) {
-        	// 					if (err || result.statusCode != 200) {
-        	// 						cb(err);
-        	// 					} else {
-        	// 						cb(null);
-        	// 					}
-        	// 				},
-        	// 			);
+          //             // send put via knox
+          //             knoxClient.putFile(
+          //               `uploads/${filename}`,
+          //               'uploads/' + filename,
+          //               {
+          //                 'Content-Type': 'image/jpg',
+          //                 'x-amz-acl': 'public-read',
+          //               },
+          //               function(err, result) {
+          //                 if (err || result.statusCode != 200) {
+          //                   cb();
+          //                 } else {
+          //                   cb();
+          //                 }
+          //               },
+          //             );
           //     });
           // }, (err) => {
           //   if (err) {
           //     callback();
           //   }
           // });
-          Listing.create({mlsId:listing.mlsId})
+
+          let interiors = [];
+
+          // get heating and cooling Features
+          let heating_cooling = [];
+
+          if (listing.property.heating && listing.property.heating !== "") {
+            heating_cooling.push(`Heating: ${listing.property.heating}`);
+          }
+          if (listing.property.cooling && listing.property.cooling !== "") {
+            heating_cooling.push(`Cooling: ${listing.property.cooling}`);
+          }
+          if (heating_cooling.length) {
+            interiors.push({type:"Heating and Cooling", values: heating_cooling});
+          }
+
+          // Flooring
+          let flooring = [];
+
+          if (listing.property.flooring && listing.property.flooring !== "") {
+            listing.property.flooring.split(',').forEach(item => {
+              flooring.push(item);
+            });
+          }
+
+          // Other Interior Features
+          let other = [];
+
+          if (listing.property.interiorFeatures && listing.property.interiorFeatures!=="") {
+            listing.property.interiorFeatures.split(',').forEach(item => {
+              other.push(item);
+            });
+          }
+
+          if (other.length) {
+            interiors.push({type: "Other Interior Features", values: other});
+          }
+
+          Listing.create({mlsId:listing.mlsId,interiors:interiors})
             .then(list => {
               let address = ""
               Object.keys(listing.address).reverse().forEach(item => {
@@ -107,6 +145,9 @@ function list(req, res, next) {
       else res.json(result);
     });
   }).catch(e => next(e));
+
+
+
   // Listing.list()
   //   .then(listings => {
   //     let result = [];
@@ -218,17 +259,19 @@ function get_rets(req, res, next) {
    .then(listing => {
      async.each(listing.data, (item, callback) => {
        Listing.get_by_mls(item.mlsId)
-        .then(listing => {
-          if (!listing) {
+        .then(list => {
+          console.log(list);
+          if (!list) {
             Listing.create({mlsId:item.mlsId})
-              .then(res => {
-                item._id = res._id;
+              .then(r => {
+                item._id = r._id;
                 item.features = [];
                 callback();
               });
           }else{
-            item.features = listing.features;
-            item._id = listing._id;
+            item.features = list.features;
+            item._id = list._id;
+            item.interiors = list.interiors;
             callback();
           }
         })
@@ -265,8 +308,10 @@ function get_rets(req, res, next) {
           }
         })
         .then(response => {
+          console.log(listing);
           response.data.features = listing.features;
           response.data._id = listing._id;
+          response.data.interiors = listing.interiors;
           res.json(response.data);
         })
         .catch(e => next(e));

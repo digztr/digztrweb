@@ -5,7 +5,7 @@ class Interiors extends Component {
     return (
       this.props.interiors.map((item,index) => {
         return (
-          <div className="col-xs-12 col-sm-6 col-md-4" key={index}>
+          <div className="col-xs-12 col-sm-6 col-md-4" key={index} style={{paddingLeft:"40px"}}>
             <p>
               {item.type} <br />
               <div style={{whiteSpace: "pre"}}>
@@ -27,7 +27,7 @@ class Interiors extends Component {
             {this.renderInterior()}
           </div>
 
-          <h5 className="sec-sub-secondary-title violet-text">Construction</h5>
+          {/**<h5 className="sec-sub-secondary-title violet-text">Construction</h5>
           <div className="row interior-features-content">
             <div className="col-xs-12 col-sm-6 col-md-4">
               <p>
@@ -36,7 +36,7 @@ class Interiors extends Component {
                 Single Family
               </p>
             </div>
-          </div>
+          </div>**/}
         </div>
       );
     }else{

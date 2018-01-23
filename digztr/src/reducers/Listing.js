@@ -69,7 +69,8 @@ export default function Listing(state = initialState, action) {
           }],
           geo: res.geo,
           address: res.address,
-          property: res.property
+          property: res.property,
+          interiors: res.interiors
         };
       }
   }
