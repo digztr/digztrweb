@@ -86,6 +86,16 @@ const ListingSchema = new mongoose.Schema({
       type: String,
       require: true
     }]
+  }],
+  construction: [{
+    type: {
+      type: String,
+      require: true
+    },
+    values: [{
+      type: String,
+      require: true
+    }]
   }]
 });
 

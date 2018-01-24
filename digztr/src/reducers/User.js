@@ -10,6 +10,7 @@ const initialState = {
 	first_name: '',
 	last_name: '',
 	email: '',
+	role: ""
 };
 
 /**
@@ -50,6 +51,7 @@ const initialState = {
  					first_name: action.response.first_name,
  					last_name: action.response.last_name,
  					email: action.response.email,
+					role: action.response.role,
  				});
 			}
 			return state;
