@@ -116,7 +116,34 @@ function list(req, res, next) {
             interiors.push({type: "Other Interior Features", values: other});
           }
 
-          Listing.create({mlsId:listing.mlsId,interiors:interiors})
+          // Construction Features
+          let construction = [];
+
+          let style = [];
+
+          if (listing.property.style && listing.property.style!=="") {
+            style.push(`${listing.property.style}`);
+          }
+          if (style.length) {
+            construction.push({type: "Style", values: style});
+          }
+
+          let other_construction = [];
+
+          if (listing.property.construction && listing.property.construction!=="") {
+            listing.property.construction.split(',').forEach(item => {
+              other_construction.push(item);
+            });
+          }
+          if (other_construction.length) {
+            construction.push({type: "Other Features", values: other_construction});
+          }
+
+          Listing.create({
+              mlsId:listing.mlsId,
+              interiors:interiors,
+              construction:construction,
+            })
             .then(list => {
               let address = ""
               Object.keys(listing.address).reverse().forEach(item => {
@@ -312,6 +339,7 @@ function get_rets(req, res, next) {
           response.data.features = listing.features;
           response.data._id = listing._id;
           response.data.interiors = listing.interiors;
+          response.data.construction = listing.construction;
           res.json(response.data);
         })
         .catch(e => next(e));

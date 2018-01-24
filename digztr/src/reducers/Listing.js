@@ -58,7 +58,7 @@ export default function Listing(state = initialState, action) {
           features: res.features,
           facts: [],
           interiors: [],
-          construction: [],
+          construction: res.construction,
           nearbyHomes: [],
           headerImages: res.photos,
           agents: [{
