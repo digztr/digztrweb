@@ -59,7 +59,7 @@ class HighlightFeatures extends Component {
         console.log(res);
         this.setState({disabledSubmitState:true});
         this.setState({submitState:"Edit Features"});
-        this.props.dispatch(ListingActions.loadById(this.props._id));
+        this.props.dispatch(ListingActions.loadRETS(this.props._id));
         this.resetStates();
       })
       .catch(res => {
@@ -84,7 +84,7 @@ class HighlightFeatures extends Component {
   handleIconChange(item){
     this.setState({selectedIcon: item});
   }
-  handleSubmit(item){
+  handleSubmit(icon){
     if (this.state.editFeatureState) {
       let data = [];
       this.setState({disabledSubmitState:true});
@@ -98,9 +98,9 @@ class HighlightFeatures extends Component {
       });
 
       data.push({
-        name: this.state.selectedIcon.name,
-        value: this.state.value,
-        icon: this.state.selectedIcon._id
+        name: icon.name,
+        value: icon.value,
+        icon: icon._id
       });
 
       this.handleApiRequest(data);
@@ -126,7 +126,7 @@ class HighlightFeatures extends Component {
   renderModal(){
     return (
       <Icons
-        handleSelect={(icon) => this.handleIconChange(icon)}
+        handleSelect={(icon) => this.handleSubmit(icon)}
       />
     )
   }
@@ -182,7 +182,7 @@ class HighlightFeatures extends Component {
         </div>
         <br />
         <div className="row text-center" style={{margin: "0 20px"}}>
-          {this.renderInputForms()}
+          {/**this.renderInputForms()**/}
           <button
             type="button"
             class="btn btn-overwrite btn-block"

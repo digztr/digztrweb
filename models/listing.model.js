@@ -32,8 +32,8 @@ const ListingSchema = new mongoose.Schema({
     ref: 'listings'
   }],
   headerImages: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'listing_header_images'
+    type: String,
+    require: true
   }],
   features: [{
     icon: {
