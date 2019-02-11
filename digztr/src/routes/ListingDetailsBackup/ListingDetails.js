@@ -25,30 +25,18 @@ import SupportCenter from './components/SupportCenter';
 import headerImage from '../../assets/jpeg/01.jpg';
 
 class DetailHeader extends Component {
-  renderAddress(){
-    return (
-      <div>
-      {
-        Object.keys(this.props.address).reverse().map(item => {
-          if (this.props.address[item]) {
-            return (
-              <span> {this.props.address[item]}
-              <img src={require("../../assets/svg/circle.svg")} alt="" style={{width:"5px",margin:"0 5px"}} />
-              </span>
-            )
-          }
-        })
-      }
-      </div>
-    );
-  }
   render() {
     return (
         <div className="row">
           <div className="col-sm-12 col-md-8">
-
-              {this.renderAddress()}
-
+            <span>
+              Ohio
+               <img src={require("../../assets/svg/circle.svg")} alt="" style={{width:"5px",margin:"0 5px"}} />
+              Ohio Country
+               <img src={require("../../assets/svg/circle.svg")} alt="" style={{width:"5px",margin:"0 5px"}} />
+              Ohio
+               <img src={require("../../assets/svg/circle.svg")} alt="" style={{width:"5px",margin:"0 5px"}} />
+              W Spring Str. Arena District</span>
           </div>
           <div className="col-sm-12 col-md-4">
             Comment Like Share
@@ -123,9 +111,10 @@ class FloatRight extends Component {
   render(){
     return(
       <div className="col-sm-12 col-md-3 hidden-sm hidden-xs">
-        <div id="sidenav">
+        <div id="sidenav" style={{zIndex: 1041}}>
           <RequestForm
             agents={this.props.agents}
+            user={this.props.user}
             />
           <ScheduleForm />
         </div>
@@ -191,7 +180,7 @@ class ListingDetails extends Component {
     return (
       this.props.listing.headerImages.map((item,index) => {
         return (
-          <img key={index} className="img-item" src={`${item}?auto=enhance&w=1740&h=978&fit=crop&fm=jpeg`} alt="" />
+          <img key={index} className="img-item" src={`${item.image}?auto=enhance&w=1740&h=978&fit=crop&fm=jpeg`} alt="" />
         )
       })
     );
@@ -221,7 +210,7 @@ class ListingDetails extends Component {
     );
   }
   componentDidMount() {
-    this.props.dispatch(ListingActions.loadRETS(this.props.params.id));
+    this.props.dispatch(ListingActions.loadById(this.props.params.id));
     var caroTimer = setInterval(function(){caro(startIndex() + 1)}, 10000);
   $('#img-carousel .img-container .img-item').eq(0).addClass('c-img-active');
   caro(startIndex());
@@ -272,16 +261,13 @@ class ListingDetails extends Component {
     $('#c-next').click(function(){caro(startIndex() + 1)});
   }
   render() {
-    console.log(this.props)
     return (
-      <div>
+      <div id="details">
         {this.renderCarousel()}
         <div className="row">
           <div className="col-sm-12 col-md-9">
             <div style={{padding: "0 40px"}}>
-              <DetailHeader
-                address={this.props.listing.address}
-                />
+              <DetailHeader />
 
               <hr className="no-pad hr-dig" />
               <DetailBody
@@ -291,6 +277,7 @@ class ListingDetails extends Component {
           </div>
           <FloatRight
             agents={this.props.listing.agents}
+            user={this.props.user}
             />
         </div>
         <NearbyHomes
@@ -304,5 +291,6 @@ class ListingDetails extends Component {
 }
 
 export default connect(state => ({
-  listing: state.Listing
+  listing: state.Listing,
+  user: state.User
 }))(ListingDetails);

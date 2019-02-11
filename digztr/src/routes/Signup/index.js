@@ -1,5 +1,5 @@
 module.exports = {
-  path: '/listings/rets/:id',
+  path: '/signup',
 
   /**
      * getComponent
@@ -7,6 +7,6 @@ module.exports = {
      * @param cb {Function} callback
      */
 	getComponent(location, cb) {
-		cb(null, require('./ListingDetails').default);
+		cb(null, require('./Signup').default);
 	},
 }

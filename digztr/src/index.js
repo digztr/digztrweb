@@ -8,7 +8,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import { CookiesProvider } from 'react-cookie';
 
-
+import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 import App from './App';
 import * as reducers from './reducers';
@@ -35,9 +35,9 @@ const rootRoute = {
      */
   getChildRoutes(location, cb) {
     cb(null, [
-      require('./routes/ListingDetails'),
       require('./routes/ListingList'),
-      require('./routes/SampleRETS')
+      require('./routes/ListingDetails'),
+      require('./routes/Signup'),
     ]);
   },
 };

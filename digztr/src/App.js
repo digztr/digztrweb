@@ -5,8 +5,9 @@ import Nav from './components/Nav';
 import Footer from './components/Footer';
 import Login from './components/Login';
 
-const ListingList = require('./routes/ListingList/ListingList').default;
+import * as UserActions from './actions/User';
 
+const ListingList = require('./routes/ListingList/ListingList').default;
 
 class Header extends Component {
   render(){
@@ -19,16 +20,18 @@ class Header extends Component {
 }
 
 class App extends Component {
-  componentDidUpdate(){
-    console.log(this.props.user);
-    if (window.FB.hasOwnProperty('FB')) {
-      window.FB.getLoginState(res => {
-        console.log(res);
-      });
+  componentDidMount() {
+    let { dispatch } = this.props;
+    let jwt = localStorage.getItem('jwt');
+
+    if (jwt && jwt !== '') {
+      dispatch(UserActions.checkJWT(jwt));
     }
+    window.FB.getLoginStatus(res => {
+      console.log(res);
+    });
   }
   render() {
-    console.log(this.props);
     return (
       <div id="root">
         <Header

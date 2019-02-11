@@ -1,6 +1,10 @@
 import React,{Component} from 'react';
 
 export default class Nav extends Component {
+    handleSignout(){
+      localStorage.removeItem('jwt');
+      window.location.reload();
+    }
     render() {
         return (
           <div id="header">
@@ -24,9 +28,9 @@ export default class Nav extends Component {
                 </a>
                 <a href="#" className="active-link">
                   <div className="hidden-xs hidden-sm col-md-1 text-center no-pad">
-                    <h5 style={{margin:"10px 0",padding: "13px 0 12px 0",fontSize:"14px",borderRight:"1px solid lightgray"}} className="violet-text">BUY HOME <img src={require("../assets/svg/down-arrow.svg")} alt="" width="12" /></h5>
+                    <h5 style={{margin:"10px 0",padding: "13px 0 12px 0",fontSize:"14px",borderRight:"1px sssolid lightgray"}} className="violet-text">BUY HOME <img src={require("../assets/svg/down-arrow.svg")} alt="" width="12" /></h5>
                   </div>
-                  <div className="hidden-xs hidden-sm col-md-3" style={{paddingRight:"0"}}>
+                  <div className="hidden-xs hidden-sm col-md-3" style={{paddingRight:"0",height:"60px"}}>
                     <h5 style={{padding:"23px 0 22px 0",fontSize:"14px",float:"left"}}>Arena District, OH|</h5>
                       <div className="search-btn" style={{float:"right"}}>
                         <img src={require("../assets/svg/loupe.svg")} alt="" />
@@ -38,11 +42,14 @@ export default class Nav extends Component {
                     <h5 style={{padding:"23px 0",fontSize:"14px"}} className="violet-03-bg">FILTER <img src={require("../assets/svg/down-arrow-white.svg")} alt="" width="12" /></h5>
                   </div>
                 </a>
-                <a data-toggle="modal" data-target="#loginModal">
+
                   <div className="hidden-xs hidden-sm col-md-2 text-center">
-                    <h5  style={{marginTop:"18px",fontSize:"14px",color:"#555"}}><img src={require("../assets/svg/log-in.svg")} alt="" /> {this.props.user.email===""?'Login/Sign up':this.props.user.first_name}</h5>
+                    <h5  style={{marginTop:"18px",fontSize:"14px",color:"#555"}}>
+                      <img src={require("../assets/svg/log-in.svg")} alt="" />
+                      <span style={{marginLeft: "15px"}}>{this.props.user.email===""?<a data-toggle="modal" data-target="#loginModal">Login/Sign up</a>:`${this.props.user.first_name}`}</span>
+                      <span style={{marginLeft: "10px", fontSize: "12px"}}>{this.props.user.email===""?'':<a onClick={() => this.handleSignout()}>(Sign Out)</a>}</span>
+                    </h5>
                   </div>
-                </a>
                 <a href="#">
                   <div className="hidden-xs hidden-sm col-md-2 text-center">
                     <h5 style={{marginTop:"22px",fontSize:"10px",color:"#555"}}><img src={require("../assets/svg/heart.svg")} alt="" /> (0)</h5>
@@ -74,7 +81,7 @@ export default class Nav extends Component {
               <li className="col-sm-12">
                 <a href="#">
                   <h5 style={{fontSize:"14px", color:"#555"}}>
-                    <img src={require("../assets/svg/log-in.svg")} alt="" /> Login/Sign up
+                    <img src={require("../assets/svg/log-in.svg")} alt="" /> {this.props.user.email===""?'Login/Sign up':this.props.user.first_name}
                   </h5>
                 </a>
               </li>

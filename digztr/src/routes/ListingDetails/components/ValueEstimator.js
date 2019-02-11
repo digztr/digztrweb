@@ -196,7 +196,7 @@ class ValueEstimator extends Component {
           </div>
 
 
-        <RentValue />
+        {/* <RentValue /> */}
 
       </div>
 

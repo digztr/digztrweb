@@ -64,7 +64,8 @@ export default class NearbyHomes extends Component {
       );
     }
     render() {
-      console.log(this.props);
+      const { homes } = this.props;
+      if (homes.length) {
         return (
           <div id="section-11" className="row">
             <h5 className="sec-sub-title text-center text-uppercase violet-text">Near By Homes</h5>
@@ -78,5 +79,9 @@ export default class NearbyHomes extends Component {
             </div>
           </div>
         );
+      }else{
+        return null;
+      }
+
     }
 }

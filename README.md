@@ -14,3 +14,5 @@ cd digztr && npm install
 # to run
 
 source env.sh; npm run dev
+
+url: http://localhost:3000/listings

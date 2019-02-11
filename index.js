@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // config should be imported before importing any other file
 const config = require('./config/config');
 const app = require('./config/express');
-
+console.log(config);
 // make bluebird default Promise
 Promise = require('bluebird'); // eslint-disable-line no-global-assign
 

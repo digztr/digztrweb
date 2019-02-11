@@ -24,7 +24,7 @@ class ListingList extends Component {
 
 					<div className="row section-margin">
 						<div className="col-sm-12 col-md-9">
-							<HomeListItem  homes={this.props.listings.slice(0,3)}/>
+							<HomeListItem  homes={this.props.listings}/>
 						</div>
 						<div className="col-sm-12 col-md-3">
 							<FilterSearch />

@@ -5,7 +5,7 @@ class Interiors extends Component {
     return (
       this.props.interiors.map((item,index) => {
         return (
-          <div className="col-xs-12 col-sm-6 col-md-4" key={index} style={{marginLeft:"40px"}}>
+          <div className="col-xs-12 col-sm-6 col-md-4" key={index}>
             <p>
               {item.type} <br />
               <div style={{whiteSpace: "pre"}}>
@@ -17,29 +17,9 @@ class Interiors extends Component {
       })
     );
   }
-  renderConstruction(){
-    const { construction } = this.props;
-    if (construction.length) {
-      return (
-        construction.map((item,index) => {
-          return (
-            <div className="col-xs-12 col-sm-6 col-md-4" key={index} style={{marginLeft:"40px"}}>
-            <p>
-            {item.type} <br />
-            <div style={{whiteSpace: "pre"}}>
-            {item.values.map(item => {return `${item} \n`})}
-            </div>
-            </p>
-            </div>
-          );
-        })
-      );
-    } else {
-      return null;
-    }
-  }
   render(){
     const { interiors } = this.props;
+    // display only if listing have interiors
     if (interiors.length) {
       return (
         <div id="section-05" className="section">
@@ -48,9 +28,15 @@ class Interiors extends Component {
             {this.renderInterior()}
           </div>
 
-          <h5 className="sec-title violet-text">Construction</h5>
+          <h5 className="sec-sub-secondary-title violet-text">Construction</h5>
           <div className="row interior-features-content">
-            {this.renderConstruction()}
+            <div className="col-xs-12 col-sm-6 col-md-4">
+              <p>
+                Type and Style <br />
+                Structure type: Tudor <br />
+                Single Family
+              </p>
+            </div>
           </div>
         </div>
       );

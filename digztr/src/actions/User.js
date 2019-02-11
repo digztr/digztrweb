@@ -32,11 +32,10 @@ export function fbLogin(response) {
 				fb_user_id: userID,
 			})
 			.then(function(res) {
-				localStorage.setItem('user', res.data);
+				localStorage.setItem('jwt', res.data.jwt);
 				dispatch(_fbLoginInitial(res.data));
 			})
 			.catch(function(res) {
-				console.log(res);
 				dispatch(_fbLoginInitial(res.data));
 			});
 	};
@@ -78,19 +77,40 @@ export function logout() {
 }
 
 /**
- * FOLLOW
+ * LOGOUT
  * @type {string}
  */
-export const FOLLOW = 'USER_FOLLOW';
+export const CHECK_JWT = 'CHECK_JWT';
 
 /**
- * follow
- * @param user
- * @returns {{type: string, user: *}}
+ * _logoutRequest
+ * @private
  */
-export function follow(user) {
-	return {
-		type: FOLLOW,
-		user,
-	};
+export const _checkJWTRequest = () => ({ type: CHECK_JWT });
+
+/**
+ * _logoutResponse
+ * @param response
+ * @private
+ */
+export const _checkJWTResponse = response => ({ type: CHECK_JWT, response });
+
+/**
+ * Check JWT
+ * Check the jwt token to server and return user
+ * Redux Action
+ * Reference: http://redux.js.org/docs/basics/Actions.html
+ * @returns {Function}
+ */
+export function checkJWT(token){
+	return dispatch => {
+		dispatch(_checkJWTRequest);
+		axios
+			.post(`${config.api.baseUrl}/api/users/token`, {
+				token: token
+			})
+			.then(res => {
+				dispatch(_checkJWTResponse(res.data));
+			});
+	}
 }

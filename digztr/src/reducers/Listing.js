@@ -19,6 +19,7 @@ const initialState = {
   agents: [],
   geo: {lat:null,lng:null},
   address: {},
+  property: {},
 }
 
 /**
@@ -31,7 +32,6 @@ const initialState = {
  * @constructor
  */
 export default function Listing(state = initialState, action) {
-
   switch(action.type) {
     case ListingActions.LOAD_BY_ID:
       if (action.response) {
@@ -41,21 +41,24 @@ export default function Listing(state = initialState, action) {
     case ListingActions.LOAD_RETS:
       if (action.response) {
         let res = action.response;
+        let metas = []
+        Object.keys(res.property).forEach(index => {
+          if (res.property[index] && (typeof res.property[index] === 'string' || typeof res.property[index] === 'number')) {
+            if (typeof res.property[index] === 'string' && res.property[index].length<=20) {
+              metas.push({type:index,value:res.property[index]});
+            }
+          }
+        });
         return {
           _id: res._id,
           name: "Sample SimplyRETS Property",
           price: res.listPrice,
           description: res.remarks,
-          meta: [
-            {type:'Area',value:res.property.area},
-            {type:'Stories',value:res.property.stories},
-            {type:'Bathrooms',value:res.property.bathsFull},
-            {type:'Bedrooms',value:res.property.bedrooms}
-          ],
+          meta: metas,
           features: res.features,
           facts: [],
           interiors: [],
-          construction: [],
+          construction: res.construction,
           nearbyHomes: [],
           headerImages: res.photos,
           agents: [{
@@ -65,7 +68,9 @@ export default function Listing(state = initialState, action) {
             "id": res.agent.id
           }],
           geo: res.geo,
-          address: res.address
+          address: res.address,
+          property: res.property,
+          interiors: res.interiors
         };
       }
   }

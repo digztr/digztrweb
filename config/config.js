@@ -24,5 +24,13 @@ module.exports = {
     callbackURL: process.env.NODE_ENV==='development'?'http://localhost:3000/listings':'https://digztr.herokuapp.com/listings',
     profileURL: 'https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email',
     profileFields: ['id', 'email', 'name']
+  },
+  s3: {
+		key: process.env.S3_KEY,
+		secret: process.env.S3_SECRET,
+		bucket: process.env.S3_BUCKET,
+	},
+  imgix: {
+    url: process.env.IMGIX_BASE_URL
   }
 }

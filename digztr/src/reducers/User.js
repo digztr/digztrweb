@@ -10,6 +10,7 @@ const initialState = {
 	first_name: '',
 	last_name: '',
 	email: '',
+	role: ""
 };
 
 /**
@@ -41,6 +42,19 @@ const initialState = {
 
  		case UserActions.LOGOUT:
  			return Object.assign({}, state, initialState);
+
+		case UserActions.CHECK_JWT:
+			if (action.response) {
+				return Object.assign({}, state, {
+ 					_id: action.response._id,
+ 					fb_uid: action.response.fb_uid,
+ 					first_name: action.response.first_name,
+ 					last_name: action.response.last_name,
+ 					email: action.response.email,
+					role: action.response.role,
+ 				});
+			}
+			return state;
  	}
 
  	return state;
